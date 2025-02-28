@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Digital Universe</title>
+    <style>
+        :root {
+            --primary-color: #8A2BE2;
+            --secondary-color: #FF6B6B;
+            --accent-color: #4ECDC4;
+            --dark-color: #292F36;
+            --light-color: #F7FFF7;
+            --gradient-bg: linear-gradient(135deg, #8A2BE2, #4ECDC4);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Background animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0.5;
+            overflow: hidden;
+        }
+        
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--gradient-bg);
+            animation: float 8s ease-in-out infinite;
+            opacity: 0.4;
+        }
+        
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.4;
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+                opacity: 0.4;
+            }
+        }
+        
+        /* Profile section */
+        .profile {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+        }
+        
+        .profile-img-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .profile-border {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            border-radius: 50%;
+            background: var(--gradient-bg);
+            z-index: -1;
+            animation: rotate 10s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid white;
+            background-color: #f0f0f0;
+        }
+        
+        .profile h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .profile p {
+            font-size: 1.2rem;
+            color: var(--dark-color);
+            max-width: 600px;
+            margin: 0 auto 10px;
+        }
+        
+        .status {
+            display: inline-block;
+            padding: 5px 15px;
+            background-color: var(--accent-color);
+            color: white;
+            border-radius: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        /* Links section */
+        .links-container {
+            display: grid;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .link-card {
+            position: relative;
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: var(--dark-color);
+        }
+        
+        .link-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gradient-bg);
+            transition: width 0.3s ease;
+        }
+        
+        .link-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .link-card:hover::before {
+            width: 100%;
+            opacity: 0.1;
+        }
+        
+        .link-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.5rem;
+            background: var(--gradient-bg);
+            color: white;
+        }
+        
+        .link-content {
+            flex: 1;
+        }
+        
+        .link-title {
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+        }
+        
+        .link-description {
+            font-size: 0.9rem;
+            color: #777;
+        }
+        
+        .link-arrow {
+            margin-left: 10px;
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .link-card:hover .link-arrow {
+            transform: translateX(5px);
+        }
+        
+        /* Categories */
+        .category {
+            margin-bottom: 30px;
+        }
+        
+        .category-title {
+            position: relative;
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+        
+        .category-title::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gradient-bg);
+            border-radius: 3px;
+        }
+        
+        /* Featured section */
+        .featured {
+            position: relative;
+            margin-bottom: 40px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .featured-content {
+            position: relative;
+            background: var(--gradient-bg);
+            color: white;
+            padding: 30px;
+            z-index: 1;
+        }
+        
+        .featured-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+        }
+        
+        .featured-content p {
+            margin-bottom: 20px;
+        }
+        
+        .featured-link {
+            display: inline-block;
+            background: white;
+            color: var(--primary-color);
+            padding: 10px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .featured-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .featured::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('/api/placeholder/800/300') center/cover;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        .newsletter h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--primary-color);
+        }
+        
+        .newsletter p {
+            margin-bottom: 20px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .newsletter-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        .newsletter-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 0 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .newsletter-button:hover {
+            background: #7B24DE;
+        }
+        
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .social-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--gradient-bg);
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: transform 0.3s;
+        }
+        
+        .social-icon:hover {
+            transform: translateY(-3px);
+        }
+        
+        /* Theme toggle */
+        .theme-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 10;
+            transition: background 0.3s;
+        }
+        
+        .theme-toggle:hover {
+            background: #7B24DE;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .profile h1 {
+                font-size: 2rem;
+            }
+            
+            .profile p {
+                font-size: 1rem;
+            }
+            
+            .featured-content h2 {
+                font-size: 1.5rem;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+        }
+        
+        /* Dark mode */
+        .dark-mode {
+            --primary-color: #BB86FC;
+            --secondary-color: #FF7597;
+            --accent-color: #03DAC6;
+            --dark-color: #F7FFF7;
+            --light-color: #121212;
+            --gradient-bg: linear-gradient(135deg, #BB86FC, #03DAC6);
+        }
+        
+        .dark-mode .link-card {
+            background: #1E1E1E;
+            color: white;
+        }
+        
+        .dark-mode .link-description {
+            color: #BBB;
+        }
+        
+        .dark-mode .newsletter {
+            background: #1E1E1E;
+        }
+        
+        .dark-mode .newsletter-input {
+            background: #2D2D2D;
+            border-color: #444;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background animation -->
+    <div class="bg-animation" id="bgAnimation"></div>
+    
+    <div class="container">
+        <!-- Profile section -->
+        <section class="profile">
+            <div class="profile-img-container">
+                <div class="profile-border"></div>
+                <img src="/api/placeholder/150/150" alt="Your Profile" class="profile-img">
+            </div>
+            <h1>Benedict kavali kioko</h1>
+            <p>Developer • Creator • Agronimist</p>
+            <div class="status">✨ Currently Available for Projects</div>
+            <div class="social-links">
+                <a href="#" class="social-icon">📘</a>
+                <a href="#" class="https://www.instagram.com/kavaliski._/?utm_source=ig_web_button_share_sheet">📸</a>
+                <a href="#" class="https://x.com/_kavali__">🐦</a>
+                <a href="#" class="linkedin.com/in/kavali-kavali-0a3534333">🖇️</a>
+            </div>
+        </section>
+        
+        <!-- Featured -->
+        <section class="featured">
+            <div class="featured-content">
+                <h2>⭐ Latest Project</h2>
+                <p>Check out my newest creation - an interactive web application that helps users visualize data in real-time.</p>
+                <a href="#" class="resume.html">View Project →</a>
+            </div>
+        </section>
+        
+        <!-- Main links -->
+        <section class="category">
+            <h2 class="category-title">📌 Main Links</h2>
+            <div class="links-container">
+                <a href="#" class="link-card">
+                    <div class="link-icon">💼</div>
+                    <div class="link-content">
+                        <div class="link-title">Portfolio Website</div>
+                        <div class="link-description">View my projects and professional work</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                
+                <a href="#" class="link-card">
+                    <div class="link-icon">📝</div>
+                    <div class="link-content">
+                        <div class="link-title">Blog</div>
+                        <div class="link-description">Read my thoughts on tech, design, and more</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                
+                <a href="#" class="link-card">
+                    <div class="link-icon">📧</div>
+                    <div class="link-content">
+                        <div class="link-title">Contact Me</div>
+                        <div class="link-description">Get in touch for collaborations or questions</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Social links -->
+        <section class="category">
+            <h2 class="category-title">🌐 Social Media</h2>
+            <div class="links-container">
+                <a href="#" class="link-card">
+                    <div class="link-icon">📘</div>
+                    <div class="link-content">
+                        <div class="link-title">Facebook</div>
+                        <div class="link-description">Follow my personal updates</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                
+                <a href="#" class="https://www.instagram.com/kavaliski._/?utm_source=ig_web_button_share_sheet">
+                    <div class="link-icon">📸</div>
+                    <div class="link-content">
+                        <div class="link-title">Instagram</div>
+                        <div class="link-description">Visual snapshots of my journey</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                
+                <a href="#" class="link-card">
+                    <div class="link-icon">🐦</div>
+                    <div class="link-content">
+                        <div class="link-title">Twitter</div>
+                        <div class="link-description">Quick thoughts and industry updates</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                
+                <a href="#" class="link-card">
+                    <div class="link-icon">🖇️</div>
+                    <div class="link-content">
+                        <div class="link-title">LinkedIn</div>
+                        <div class="link-description">Professional profile and connections</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Professional links -->
+        <section class="category">
+            <h2 class="category-title">👨‍💻 Professional</h2>
+            <div class="links-container">
+                <a href="#" class="link-card">
+                    <div class="link-icon">🧠</div>
+                    <div class="link-content">
+                        <div class="link-title">GitHub</div>
+                        <div class="link-description">Browse my code repositories</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                
+                <a href="#" class="link-card">
+                    <div class="link-icon">📊</div>
+                    <div class="link-content">
+                        <div class="link-title">Resume / CV</div>
+                        <div class="link-description">Download my professional resume</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                
+                <a href="#" class="link-card">
+                    <div class="link-icon">💡</div>
+                    <div class="link-content">
+                        <div class="link-title">Dribbble</div>
+                        <div class="link-description">Check out my design portfolio</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Content links -->
+        <section class="category">
+            <h2 class="category-title">📱 Content</h2>
+            <div class="links-container">
+                <a href="#" class="link-card">
+                    <div class="link-icon">🎬</div>
+                    <div class="link-content">
+                        <div class="link-title">YouTube Channel</div>
+                        <div class="link-description">Watch my tutorials and vlogs</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                
+                <a href="#" class="link-card">
+                    <div class="link-icon">🎙️</div>
+                    <div class="link-content">
+                        <div class="link-title">Podcast</div>
+                        <div class="link-description">Listen to my weekly discussions</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+                
+                <a href="#" class="link-card">
+                    <div class="link-icon">📚</div>
+                    <div class="link-content">
+                        <div class="link-title">Medium Articles</div>
+                        <div class="link-description">Deep dives into various topics</div>
+                    </div>
+                    <div class="link-arrow">→</div>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Newsletter -->
+        <section class="newsletter">
+            <h2>📫 Stay Updated</h2>
+            <p>Subscribe to my newsletter for the latest updates, articles, and resources.</p>
+            <form class="newsletter-form">
+                <input type="email" placeholder="Your email address" class="newsletter-input" required>
+                <button type="submit" class="newsletter-button">Subscribe</button>
+            </form>
+        </section>
+        
+        <!-- Footer -->
+        <footer>
+            <p>© 2025 Your Name. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <!-- Theme toggle -->
+    <div class="theme-toggle" id="themeToggle">🌓</div>
+    
+    <script>
+        // Create floating bubbles
+        const createBubbles = () => {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const colors = ['#8A2BE2', '#4ECDC4', '#FF6B6B'];
+            
+            for (let i = 0; i < 15; i++) {
+                const bubble = document.createElement('div');
+                bubble.className = 'bubble';
+                
+                const size = Math.random() * 100 + 50;
+                const position = {
+                    x: Math.random() * 100,
+                    y: Math.random() * 100
+                };
+                
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                bubble.style.left = `${position.x}%`;
+                bubble.style.top = `${position.y}%`;
+                bubble.style.animationDelay = `${Math.random() * 8}s`;
+                
+                bgAnimation.appendChild(bubble);
+            }
+        };
+        
+        // Theme toggle
+        const toggleTheme = () => {
+            document.body.classList.toggle('dark-mode');
+            
+            // Update theme toggle icon
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌓';
+        };
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createBubbles();
+            
+            // Theme toggle event
+            const themeToggle = document.getElementById('themeToggle');
+            themeToggle.addEventListener('click', toggleTheme);
+        });
+    </script>
+</body>
+</html>
